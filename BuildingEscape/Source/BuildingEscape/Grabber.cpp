@@ -5,6 +5,7 @@
 #include "GameFramework/Actor.h"
 #include "DrawDebugHelpers.h"
 
+
 #define OUT
 // Sets default values for this component's properties
 UGrabber::UGrabber()
@@ -22,8 +23,38 @@ void UGrabber::BeginPlay()
 {
 	Super::BeginPlay();
 	UE_LOG(LogTemp, Warning, TEXT("Grabber Reporting for duty"));
+
+	///Look for physics handle
+
+	PhysicsHandle = GetOwner()->FindComponentByClass<UPhysicsHandleComponent>();
+	if (PhysicsHandle)
+	{
+		//handle is found
+	}
+	else
+	{
+		UE_LOG(LogTemp, Error, TEXT("Cannot find the physics handle on %s"), *GetOwner()->GetName());
+	}
 	// ...
+
+	InputComponent = GetOwner()->FindComponentByClass<UInputComponent>();
+
+	if (InputComponent)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Input component found"));
+		///Bind the input axis
+		InputComponent->BindAction("Grab", IE_Pressed, this, &UGrabber::Grab);
+	}
+	else
+	{
+		UE_LOG(LogTemp, Error, TEXT("Cannot find the player input handle on %s"), *GetOwner()->GetName());
+	}
 	
+}
+
+void UGrabber::Grab()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Grab Pressed"));
 }
 
 
