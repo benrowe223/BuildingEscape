@@ -22,8 +22,6 @@ UOpenDoor::UOpenDoor()
 void UOpenDoor::BeginPlay()
 {
 	Super::BeginPlay();
-
-	Owner = GetOwner();
 }
 
 // Called every frame
